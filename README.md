@@ -95,9 +95,9 @@ following Java code:
 
 ```java
 
-import com.verbatim.client.auth.Key;
-import com.verbatim.client.auth.KeyLoader;
-import com.verbatim.client.auth.TokenBuilder;
+import cloud.verbatim.client.auth.Key;
+import cloud.verbatim.client.auth.KeyLoader;
+import cloud.verbatim.client.auth.TokenBuilder;
 
 import java.io.File;
 import java.time.Instant;
@@ -132,4 +132,8 @@ public class TokenBuilderExample {
 ## Author
 
 api@verbatim.cloud
+
+## 
+https://central.sonatype.org/publish/publish-maven/#other-prerequisites
+
 

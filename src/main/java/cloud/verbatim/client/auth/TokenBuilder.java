@@ -1,4 +1,4 @@
-package com.verbatim.client.auth;
+package cloud.verbatim.client.auth;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;

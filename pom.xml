@@ -2,11 +2,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.verbatim.client</groupId>
+    <groupId>cloud.verbatim.client</groupId>
     <artifactId>auth</artifactId>
     <packaging>jar</packaging>
     <name>Client Authentication</name>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <url>https://github.com/verbatim-ai/verbatim-java-client-auth</url>
     <description>Verbatim AI core authenticate library</description>
     <scm>
@@ -21,9 +21,8 @@
 
     <licenses>
         <license>
-            <name>Unlicense</name>
-            <url>https://www.verbatim.cloud/terms-of-use</url>
-            <distribution>repo</distribution>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
 
@@ -35,6 +34,20 @@
             <organizationUrl>https://www.verbatim.cloud</organizationUrl>
         </developer>
     </developers>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots
+            </url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>
+                https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/
+            </url>
+        </repository>
+    </distributionManagement>
 
     <build>
         <plugins>
@@ -181,13 +194,13 @@
 
     <profiles>
         <profile>
-            <id>sign-artifacts</id>
+            <id>release</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.5</version>
+                        <version>3.2.7</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -195,10 +208,28 @@
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
+                                <configuration>
+                                    <gpgArguments>
+                                        <arg>--pinentry-mode</arg>
+                                        <arg>loopback</arg>
+                                    </gpgArguments>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
+
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.7.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                        </configuration>
+                    </plugin>
+
                 </plugins>
+
             </build>
         </profile>
     </profiles>

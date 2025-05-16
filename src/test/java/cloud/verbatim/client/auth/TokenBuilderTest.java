@@ -1,4 +1,4 @@
-package com.verbatim.client.auth;
+package cloud.verbatim.client.auth;
 
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.Assertions;
