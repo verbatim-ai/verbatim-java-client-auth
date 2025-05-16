@@ -6,7 +6,7 @@
     <artifactId>auth</artifactId>
     <packaging>jar</packaging>
     <name>Client Authentication</name>
-    <version>1.0.0</version>
+    <version>1.0-SNAPSHOT</version>
     <url>https://github.com/verbatim-ai/verbatim-java-client-auth</url>
     <description>Verbatim AI core authenticate library</description>
     <scm>
