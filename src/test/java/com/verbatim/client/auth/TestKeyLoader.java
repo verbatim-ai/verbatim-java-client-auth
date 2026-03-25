@@ -1,11 +1,11 @@
-package cloud.verbatim.client.auth;
+package com.verbatim.client.auth;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
 
-class KeyLoaderTest {
+class TestKeyLoader {
 
     @Test
     void fromInputStreamFails()  {
@@ -16,13 +16,13 @@ class KeyLoaderTest {
 
     @Test
     void fromInputStream()  {
-        Key key=new KeyLoader().from(KeyLoaderTest.class.getResourceAsStream("/sampleKey.json")).get();
+        Key key=new KeyLoader().from(TestKeyLoader.class.getResourceAsStream("/sampleKey.json")).get();
         Assertions.assertNotNull(key);
     }
 
     @Test
     void testFromFile() throws FileNotFoundException {
-       File file= new File(KeyLoaderTest.class.getResource("/sampleKey.json").getFile());
+       File file= new File(TestKeyLoader.class.getResource("/sampleKey.json").getFile());
        Assertions.assertNotNull(file);
         Key key=new KeyLoader().from(file).get();
         Assertions.assertNotNull(key);
@@ -30,7 +30,7 @@ class KeyLoaderTest {
 
     @Test
     void testFromPath() throws FileNotFoundException {
-        File file= new File(KeyLoaderTest.class.getResource("/sampleKey.json").getFile());
+        File file= new File(TestKeyLoader.class.getResource("/sampleKey.json").getFile());
         Assertions.assertNotNull(file);
         Key key=new KeyLoader().from(file.toPath()).get();
         Assertions.assertNotNull(key);
@@ -38,7 +38,7 @@ class KeyLoaderTest {
 
     @Test
     void testFromReader() {
-        InputStreamReader reader= new InputStreamReader(KeyLoaderTest.class.getResourceAsStream("/sampleKey.json"));
+        InputStreamReader reader= new InputStreamReader(TestKeyLoader.class.getResourceAsStream("/sampleKey.json"));
         Assertions.assertNotNull(reader);
         Key key=new KeyLoader().from(reader).get();
         Assertions.assertNotNull(key);
@@ -46,10 +46,11 @@ class KeyLoaderTest {
 
     @Test
     void get() {
-        Key key=new KeyLoader().from(KeyLoaderTest.class.getResourceAsStream("/sampleKey.json")).get();
+        Key key=new KeyLoader().from(TestKeyLoader.class.getResourceAsStream("/sampleKey.json")).get();
         Assertions.assertNotNull(key);
         Assertions.assertEquals("MY_KEY_ID",key.getKeyId());
         Assertions.assertEquals("MY_ORG_ID",key.getOrganizationId());
-        Assertions.assertEquals("MY_SECRET_TO_TESTMY_SECRET_TO_TESTMY_SECRET_TO_TESTMY_SECRET_TO_TESTMY_SECRET_TO_TESTMY_SECRET_TO_TEST",key.getSecret());
+        Assertions.assertEquals("MY_SECRET_TO_TESTMY_SECRET_TO_TESTMY_SECRET_TO_TESTMY_SECRET_TO_TESTMY_SECRET_TO_TESTMY_SECRET_TO_TEST",key.getPrivateKey());
+        Assertions.assertEquals("MY_PUBLIC_KEY_TO_TEST_MY_PUBLIC_KEY_TO_TEST_MY_PUBLIC_KEY_TO_TEST_MY_PUBLIC_KEY_TO_TEST_MY_PUBLIC_KEY_TO_TEST",key.getPublicKey());
     }
 }

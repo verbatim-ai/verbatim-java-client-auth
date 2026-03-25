@@ -1,4 +1,4 @@
-package cloud.verbatim.client.auth;
+package com.verbatim.client.auth;
 
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.Assertions;
@@ -47,32 +47,40 @@ class TokenBuilderTest {
 
     @Test
     void buildFail() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
+        Assertions.assertThrows(TokenException.class, () -> {
             new TokenBuilder().build();
         });
-        Assertions.assertThrows(RuntimeException.class, () -> {
+        Assertions.assertThrows(TokenException.class, () -> {
             new TokenBuilder().expiresAt(Instant.now().plus(1, ChronoUnit.DAYS)).build();
         });
-        InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(KeyLoaderTest.class.getResourceAsStream("/sampleKey.json")));
-        Assertions.assertThrows(RuntimeException.class, () -> {
+        InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(TestKeyLoader.class.getResourceAsStream("/sampleKey.json")));
+        Assertions.assertThrows(TokenException.class, () -> {
             new TokenBuilder().key(new KeyLoader().from(reader).get()).build();
         });
     }
 
     @Test
-    void build() {
-        InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(KeyLoaderTest.class.getResourceAsStream("/sampleKey.json")));
+    void buildInvalidKey() throws TokenException {
+        InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(TestKeyLoader.class.getResourceAsStream("/invalidKey.json")));
+        Assertions.assertThrows(TokenException.class,() -> new TokenBuilder()
+                .key(new KeyLoader().from(reader).get())
+                .expiresAt(Instant.now().plus(1, ChronoUnit.HOURS))
+                .build());
+    }
+    @Test
+    void build() throws TokenException {
+        InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(TestKeyLoader.class.getResourceAsStream("/demoKey.json")));
         String token = new TokenBuilder()
                 .key(new KeyLoader().from(reader).get())
-                .expiresAt(Instant.now().plus(1, ChronoUnit.DAYS))
+                .expiresAt(Instant.now().plus(1, ChronoUnit.HOURS))
                 .build();
         Assertions.assertNotNull(token);
         Assertions.assertTrue(token.length() > 100);
     }
 
     @Test
-    void buildWithClaims() {
-        InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(KeyLoaderTest.class.getResourceAsStream("/sampleKey.json")));
+    void buildWithClaims() throws TokenException {
+        InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(TestKeyLoader.class.getResourceAsStream("/demoKey.json")));
         String token = new TokenBuilder()
                 .key(new KeyLoader().from(reader).get())
                 .expiresAt(Instant.now().plus(1, ChronoUnit.DAYS))
@@ -83,6 +91,4 @@ class TokenBuilderTest {
         Assertions.assertTrue(token.length() > 100);
         log.info("test token: " + token);
     }
-
-
 }

@@ -1,4 +1,4 @@
-package cloud.verbatim.client.auth;
+package com.verbatim.client.auth;
 
 import com.google.gson.Gson;
 
@@ -67,7 +67,6 @@ public class KeyLoader {
         Objects.requireNonNull(inputStream, "inputStream cannot be null");
         return from(new InputStreamReader(inputStream));
     }
-
 
     /**
      * Loads a key from the provided Reader.

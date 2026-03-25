@@ -1,4 +1,4 @@
-package cloud.verbatim.client.auth;
+package com.verbatim.client.auth;
 
 import lombok.extern.java.Log;
 
@@ -35,9 +35,9 @@ public class Main {
 
         try {
             Key key = new KeyLoader().from(new File(args[0])).get();
-            Instant expiredArt = Instant.now().plus(1, ChronoUnit.DAYS);
-            String token = new TokenBuilder().key(key).expiresAt(expiredArt).build();
-            System.out.println("Your token is ready. Expires at: " + expiredArt);
+            Instant expiredAt = Instant.now().plus(1, ChronoUnit.DAYS);
+            String token = new TokenBuilder().key(key).expiresAt(expiredAt).build();
+            System.out.println("Your token is ready. Expires at: " + expiredAt);
             System.out.println(token);
         } catch (Exception e) {
             System.err.println("Exception when calling Main");

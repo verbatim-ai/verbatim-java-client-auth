@@ -1,4 +1,4 @@
-package cloud.verbatim.client.auth;
+package com.verbatim.client.auth;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,37 +12,44 @@ class KeyTest {
 
         key.keyId=null;
         key.organizationId="oid";
-        key.secret="secret";
+        key.privateKey="privateKey";
+        key.publicKey="publicKey";
         Assertions.assertThrows(RuntimeException.class, key::assertContent);
 
         key.keyId="keyId";
         key.organizationId=null;
-        key.secret="secret";
+        key.privateKey="privateKey";
+        key.publicKey="publicKey";
         Assertions.assertThrows(RuntimeException.class, key::assertContent);
 
         key.keyId="kid";
         key.organizationId="oid";
-        key.secret=null;
+        key.privateKey=null;
+        key.publicKey="publicKey";
         Assertions.assertThrows(RuntimeException.class, key::assertContent);
 
         key.keyId=" ";
         key.organizationId="oid";
-        key.secret="secret";
+        key.privateKey="privateKey";
+        key.publicKey="publicKey";
         Assertions.assertThrows(RuntimeException.class, key::assertContent);
 
         key.keyId="keyId";
         key.organizationId=" ";
-        key.secret="secret";
+        key.privateKey="privateKey";
+        key.publicKey="publicKey";
         Assertions.assertThrows(RuntimeException.class, key::assertContent);
 
         key.keyId="kid";
         key.organizationId="oid";
-        key.secret=" ";
+        key.privateKey=" ";
+        key.publicKey="publicKey";
         Assertions.assertThrows(RuntimeException.class, key::assertContent);
 
         key.keyId="kid";
         key.organizationId="oid";
-        key.secret="toosmall";
+        key.privateKey="toosmall";
+        key.publicKey="publicKey";
         Assertions.assertThrows(RuntimeException.class, key::assertContent);
     }
 
@@ -61,10 +68,10 @@ class KeyTest {
     }
 
     @Test
-    void getSecret() {
+    void getprivateKey() {
         Key key=new Key();
-        key.secret="SECRET";
-        Assertions.assertEquals("SECRET", key.secret);
+        key.privateKey="privateKey";
+        Assertions.assertEquals("privateKey", key.privateKey);
     }
 
     @Test
@@ -72,7 +79,7 @@ class KeyTest {
         Key key=new Key();
         key.keyId="ID";
         key.organizationId="OID";
-        key.secret="SECRET";
-        Assertions.assertEquals("Key(keyId=ID, organizationId=OID, secret=SECRET)", key.toString());
+        key.privateKey="privateKey";
+        Assertions.assertEquals("Key(keyId=ID, organizationId=OID, privateKey=privateKey, publicKey=null)", key.toString());
     }
 }
